@@ -14,6 +14,10 @@
                 await pyodide.loadPackage("numpy");
                 console.log("numpy loaded successfully");
 
+                // pyxelをインストール
+                await pyodide.runPythonAsync("import micropip; await micropip.install('pyxel')");
+                console.log("pyxel installed successfully");
+
                 // matometayatu.pyをフェッチして実行
                 const response = await fetch("matometayatu.py");
                 const scriptContent = await response.text();
