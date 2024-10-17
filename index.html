@@ -13,7 +13,7 @@
             // Pyodideの読み込み
             let pyodide = await loadPyodide();
 
-            // 必要なパッケージのインストール
+            // 必要なパッケージをインストール
             await pyodide.loadPackage("numpy");
 
             // Pythonコードの実行
@@ -26,15 +26,15 @@
                 class TicTacToeGame:
                     def __init__(self):
                         pyxel.init(240, 240, caption="〇×ゲーム")
-                        # 他の初期化コードを追加
+                        # その他の初期化コード
                         pyxel.run(self.update, self.draw)
 
                     def update(self):
-                        # ゲーム更新ロジックを追加
+                        # ゲームの更新ロジック
                         pass
 
                     def draw(self):
-                        # 描画ロジックを追加
+                        # 描画ロジック
                         pass
 
                 # ゲーム開始
