@@ -14,7 +14,7 @@
             let pyodide = await loadPyodide();
 
             // 必要なパッケージをインストール
-            await pyodide.loadPackage("numpy");
+            await pyodide.loadPackage[("numpy","pyxel")];
 
             // Pythonコードの実行
             await pyodide.runPythonAsync(`
