@@ -14,28 +14,40 @@
             let pyodide = await loadPyodide();
 
             // 必要なパッケージをインストール
-            await pyodide.loadPackage[("numpy","pyxel")];
+            await pyodide.loadPackage(["numpy", "pyxel"]);
 
             // Pythonコードの実行
             await pyodide.runPythonAsync(`
                 import numpy as np
                 import pyxel
-                from game import State
-                from pv_mcts import pv_mcts_action
 
+                # シンプルな〇×ゲームの実装例
                 class TicTacToeGame:
                     def __init__(self):
                         pyxel.init(240, 240, caption="〇×ゲーム")
-                        # その他の初期化コード
+                        self.reset()
                         pyxel.run(self.update, self.draw)
 
+                    def reset(self):
+                        self.board = np.zeros((3, 3))
+                        self.turn = 1
+
                     def update(self):
-                        # ゲームの更新ロジック
-                        pass
+                        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+                            x = pyxel.mouse_x // 80
+                            y = pyxel.mouse_y // 80
+                            if self.board[y, x] == 0:
+                                self.board[y, x] = self.turn
+                                self.turn = 3 - self.turn  # 1→2, 2→1 に交代
 
                     def draw(self):
-                        # 描画ロジック
-                        pass
+                        pyxel.cls(0)
+                        for y in range(3):
+                            for x in range(3):
+                                if self.board[y, x] == 1:
+                                    pyxel.text(x * 80 + 40, y * 80 + 40, "O", pyxel.COLOR_WHITE)
+                                elif self.board[y, x] == 2:
+                                    pyxel.text(x * 80 + 40, y * 80 + 40, "X", pyxel.COLOR_WHITE)
 
                 # ゲーム開始
                 TicTacToeGame()
