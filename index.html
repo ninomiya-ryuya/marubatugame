@@ -1,2 +1,25 @@
-<script src="https://cdn.jsdelivr.net/gh/kitao/pyxel/wasm/pyxel.js"></script>
-<pyxel-run name="matometayatu.py"></pyxel-run>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pyxel Tic Tac Toe</title>
+    <script src="https://cdn.jsdelivr.net/gh/kitao/pyxel/wasm/pyxel.js"></script>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.17.0/full/pyodide.js"></script>
+    <script>
+        async function main() {
+            let pyodide = await loadPyodide();
+            await pyodide.loadPackage("numpy");
+            // 他のパッケージを読み込む
+            await pyodide.runPythonAsync(`
+                import pyxel
+                // from game import State
+                // from pv_mcts import pv_mcts_action
+                # 他のモジュールのインポート
+            `);
+            await pyodide.runPythonAsync("TicTacToeGame()");
+        }
+        main();
+    </script>
+</body>
+</html>
