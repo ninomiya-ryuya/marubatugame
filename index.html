@@ -5,20 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>〇×ゲーム</title>
     <script src="https://cdn.jsdelivr.net/gh/kitao/pyxel/wasm/pyxel.js"></script>
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.2/full/pyodide.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.2/full/pyodide.js"></script> <!-- Pyodideの正しいURL -->
     <script type="text/javascript">
         async function loadPackages() {
-            // Pyodideを読み込む
-            let pyodide = await loadPyodide();
-            // numpyをインストール
-            await pyodide.loadPackage("numpy");
-            // matometayatu.pyを実行する
-            await pyodide.runPythonAsync(`
-                import matometayatu
-            `);
+            try {
+                let pyodide = await loadPyodide();  // loadPyodide関数の呼び出し
+                await pyodide.loadPackage("numpy");
+                console.log("numpy loaded successfully");
+                await pyodide.runPythonAsync(`
+                    import matometayatu
+                `);
+                console.log("matometayatu.py executed successfully");
+            } catch (error) {
+                console.error("Error occurred:", error);
+            }
         }
 
-        window.onload = loadPackages;
+        window.onload = loadPackages;  // ウィンドウが読み込まれたらloadPackagesを実行
     </script>
 </head>
 <body>
