@@ -1,2 +1,28 @@
-<script src="https://cdn.jsdelivr.net/gh/kitao/pyxel/wasm/pyxel.js"></script>
-<pyxel-run name="matometayatu.py"></pyxel-run>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>〇×ゲーム</title>
+    <script src="https://cdn.jsdelivr.net/gh/kitao/pyxel/wasm/pyxel.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.2/full/pyodide.js"></script>
+    <script type="text/javascript">
+        async function loadPackages() {
+            // Pyodideを読み込む
+            let pyodide = await loadPyodide();
+            // numpyをインストール
+            await pyodide.loadPackage("numpy");
+            // matometayatu.pyを実行する
+            await pyodide.runPythonAsync(`
+                import matometayatu
+            `);
+        }
+
+        window.onload = loadPackages;
+    </script>
+</head>
+<body>
+    <h1>〇×ゲーム</h1>
+    <p>ゲームを読み込み中...</p>
+</body>
+</html>
