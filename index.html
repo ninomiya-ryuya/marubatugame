@@ -14,17 +14,12 @@
                 await pyodide.loadPackage("numpy");
                 console.log("numpy loaded successfully");
 
-                // matometayatu.pyをインポート
-                await pyodide.runPythonAsync(`
-                    import sys
-                    import os
+                // matometayatu.pyをフェッチして実行
+                const response = await fetch("matometayatu.py");
+                const scriptContent = await response.text();
 
-                    # HTMLファイルと同じディレクトリにmatometayatu.pyがあると仮定
-                    script_path = os.path.join(os.path.dirname(__file__), "matometayatu.py")
-                    with open(script_path) as f:
-                        code = f.read()
-                    exec(code)  # スクリプトを実行
-                `);
+                // スクリプトを実行
+                await pyodide.runPythonAsync(scriptContent);
                 console.log("matometayatu.py executed successfully");
             } catch (error) {
                 console.error("Error occurred:", error);
