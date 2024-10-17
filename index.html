@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>〇×ゲーム</title>
     <script src="https://cdn.jsdelivr.net/gh/kitao/pyxel/wasm/pyxel.js"></script>
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.2/full/pyodide.js"></script> <!-- Pyodideの正しいURL -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.2/full/pyodide.js"></script>
     <script type="text/javascript">
         async function loadPackages() {
             try {
                 let pyodide = await loadPyodide();  // loadPyodide関数の呼び出し
                 await pyodide.loadPackage("numpy");
                 console.log("numpy loaded successfully");
+
+                // matometayatu.pyのファイルをPyodideに読み込む
                 await pyodide.runPythonAsync(`
+                    import sys
+                    sys.path.append('.')  # スクリプトのパスを追加
                     import matometayatu
                 `);
                 console.log("matometayatu.py executed successfully");
