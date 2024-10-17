@@ -9,15 +9,21 @@
     <script type="text/javascript">
         async function loadPackages() {
             try {
-                let pyodide = await loadPyodide();  // loadPyodide関数の呼び出し
+                // Pyodideを読み込む
+                let pyodide = await loadPyodide();
                 await pyodide.loadPackage("numpy");
                 console.log("numpy loaded successfully");
 
-                // matometayatu.pyのファイルをPyodideに読み込む
+                // matometayatu.pyをインポート
                 await pyodide.runPythonAsync(`
                     import sys
-                    sys.path.append('.')  # スクリプトのパスを追加
-                    import matometayatu
+                    import os
+
+                    # HTMLファイルと同じディレクトリにmatometayatu.pyがあると仮定
+                    script_path = os.path.join(os.path.dirname(__file__), "matometayatu.py")
+                    with open(script_path) as f:
+                        code = f.read()
+                    exec(code)  # スクリプトを実行
                 `);
                 console.log("matometayatu.py executed successfully");
             } catch (error) {
