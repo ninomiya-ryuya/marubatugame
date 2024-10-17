@@ -11,10 +11,16 @@
             try {
                 // Pyodideを読み込む
                 let pyodide = await loadPyodide();
+                
+                // micropipをインストール
+                await pyodide.loadPackage("micropip");
+                console.log("micropip loaded successfully");
+
+                // numpyをロード
                 await pyodide.loadPackage("numpy");
                 console.log("numpy loaded successfully");
 
-                // pyxelをインストール
+                // pyxelをmicropipでインストール
                 await pyodide.runPythonAsync("import micropip; await micropip.install('pyxel')");
                 console.log("pyxel installed successfully");
 
