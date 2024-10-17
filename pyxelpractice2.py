@@ -1,5 +1,5 @@
 import pyxel
-from game import State
+# from game import State
 from pv_mcts import pv_mcts_action
 from tensorflow.keras.models import load_model
 
