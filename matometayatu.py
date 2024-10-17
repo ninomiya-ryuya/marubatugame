@@ -3,9 +3,9 @@
 import random
 import math
 
-import pyodide
+# import pyodide
 
-await pyodide.loadPackage("numpy")
+# await pyodide.loadPackage("numpy")
 
 # import os  #tensorflowのエラーを防ぐため
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  #tensorflowのエラーを防ぐため
