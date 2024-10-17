@@ -10,6 +10,7 @@
 <body>
     <script>
         async function main() {
+            // Pyodideの読み込み
             let pyodide = await loadPyodide();
 
             // 必要なパッケージのインストール
@@ -22,7 +23,21 @@
                 from game import State
                 from pv_mcts import pv_mcts_action
 
-                # ゲームクラスの定義と実行
+                class TicTacToeGame:
+                    def __init__(self):
+                        pyxel.init(240, 240, caption="〇×ゲーム")
+                        # 他の初期化コードを追加
+                        pyxel.run(self.update, self.draw)
+
+                    def update(self):
+                        # ゲーム更新ロジックを追加
+                        pass
+
+                    def draw(self):
+                        # 描画ロジックを追加
+                        pass
+
+                # ゲーム開始
                 TicTacToeGame()
             `);
         }
