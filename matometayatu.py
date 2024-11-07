@@ -343,19 +343,31 @@ def boltzman(xs, temperature):
 
 #pyxelpractice2.pyの部分
 import pyxel
+import numpy as np
 # from game import State
 # from pv_mcts import pv_mcts_action
-from tensorflow.keras.models import load_model
 
 class TicTacToeGame:
     def __init__(self):
         pyxel.init(240, 240, caption="〇×ゲーム")
-        self.model = load_model('./model/best.h5')
+        
+        # Numpyからモデルの重みを読み込む
+        weights = np.load('./11_7_best_model_weights.npy', allow_pickle=True)
+        
+        # モデルを構築して重みをセットする（モデル構造に合わせて修正）
+        self.model = self.build_model()
+        self.model.set_weights(weights)
+        
         self.state = State()
         self.next_action = pv_mcts_action(self.model, 0.0)
         self.game_over = False  # ゲームが終了したかどうかのフラグ
         self.game_over_frame = 0  # ゲーム終了時のフレーム数を記録
         pyxel.run(self.update, self.draw)
+
+    def build_model(self):
+        # モデルの構造をここで定義
+        # モデルの層を定義し、同じ構造のものを作成してください
+        pass
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_Q):
@@ -387,7 +399,7 @@ class TicTacToeGame:
         if self.state.is_done():
             self.game_over = True
             self.game_over_frame = pyxel.frame_count  # 現在のフレーム数を記録
-            print("Game Over!!!")#ターミナルに表示
+            print("Game Over!!!")  # ターミナルに表示
 
     def draw(self):
         pyxel.cls(0)
