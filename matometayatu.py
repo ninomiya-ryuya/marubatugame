@@ -393,12 +393,14 @@ class TicTacToeGame:
         return [policy_output, value_output]
         
     # ビルド関数で構築したモデルにNumpy重みを適用
-    model_weights = np.load('model_weights.npy', allow_pickle=True)
+    model_weights = np.load('./11_7_best_model_weights.npy', allow_pickle=True)
     model = build_model()
     
-    # 各層に重みを適用（実際の構造に応じて個別設定が必要です）
-    for layer, weights in zip(model.layers, model_weights):
-    layer.set_weights(weights)
+    # モデルの重みをセットするコード部分（仮の例）
+    for layer in self.model.layers:
+        if hasattr(layer, 'set_weights'):
+            layer.set_weights(weights)  
+
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_Q):
