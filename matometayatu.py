@@ -355,7 +355,8 @@ DN_OUTPUT_SIZE = 9
 
 class TicTacToeGame:
     def __init__(self):
-        pyxel.init(240, 240, caption="〇×ゲーム")
+        pyxel.init(240, 240)
+        pyxel.window_title("〇×ゲーム")  # 代わりにタイトル設定
         
         # Numpyからモデルの重みを読み込む
         weights = np.load('./11_7_best_model_weights.npy', allow_pickle=True)
