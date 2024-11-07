@@ -359,7 +359,7 @@ class TicTacToeGame:
         pyxel.window_title("〇×ゲーム")  # 代わりにタイトル設定
         
         # Numpyからモデルの重みを読み込む
-        weights = np.load('./11_7_best_model_weights.npy', allow_pickle=True)
+        weights = np.load('11_7_best_model_weights.npy', allow_pickle=True)
         
         # モデルを構築して重みをセットする（モデル構造に合わせて修正）
         self.model = self.build_model()
@@ -392,14 +392,11 @@ class TicTacToeGame:
         
         return [policy_output, value_output]
         
-    # ビルド関数で構築したモデルにNumpy重みを適用
-    model_weights = np.load('./11_7_best_model_weights.npy', allow_pickle=True)
-    model = build_model()
-    
-    # モデルの重みをセットするコード部分（仮の例）
-    for layer in self.model.layers:
-        if hasattr(layer, 'set_weights'):
-            layer.set_weights(weights)  
+    def set_weights(self, model, weights):
+        # モデルの各レイヤーに重みをセットする
+        for layer, layer_weights in zip(model, weights):
+            if hasattr(layer, 'set_weights'):
+                layer.set_weights(layer_weights)
 
 
     def update(self):
