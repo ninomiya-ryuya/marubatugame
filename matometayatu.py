@@ -347,6 +347,12 @@ import numpy as np
 # from game import State
 # from pv_mcts import pv_mcts_action
 
+# 畳み込み層のフィルター数と残差ブロックの数
+DN_FILTERS = 128
+DN_RESIDUAL_NUM = 16
+DN_INPUT_SHAPE = (3, 3, 2)
+DN_OUTPUT_SIZE = 9
+
 class TicTacToeGame:
     def __init__(self):
         pyxel.init(240, 240, caption="〇×ゲーム")
@@ -365,9 +371,33 @@ class TicTacToeGame:
         pyxel.run(self.update, self.draw)
 
     def build_model(self):
-        # モデルの構造をここで定義
-        # モデルの層を定義し、同じ構造のものを作成してください
-        pass
+        # 入力層
+        input_data = np.zeros(DN_INPUT_SHAPE)  # ダミーデータで構造を再現
+        # 畳み込み層
+        x = conv(DN_FILTERS)(input_data)
+        x = batch_norm()(x)
+        x = relu(x)
+        
+        # 残差ブロック
+        for _ in range(DN_RESIDUAL_NUM):
+            x = residual_block(x)
+        
+        # プーリング層
+        x = global_avg_pool(x)
+        
+        # 出力層
+        policy_output = dense(DN_OUTPUT_SIZE, activation="softmax")(x)
+        value_output = dense(1, activation="tanh")(x)
+        
+        return [policy_output, value_output]
+        
+    # ビルド関数で構築したモデルにNumpy重みを適用
+    model_weights = np.load('model_weights.npy', allow_pickle=True)
+    model = build_model()
+    
+    # 各層に重みを適用（実際の構造に応じて個別設定が必要です）
+    for layer, weights in zip(model.layers, model_weights):
+    layer.set_weights(weights)
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_Q):
